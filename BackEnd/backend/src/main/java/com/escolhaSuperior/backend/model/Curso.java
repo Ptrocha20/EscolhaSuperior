@@ -33,7 +33,7 @@ public class Curso {
         return id;
     }
 
-    public Long setId(Long id){
+    public void setId(Long id){
         this.id = id;
     }
 
@@ -41,7 +41,7 @@ public class Curso {
         return nome;
     }
 
-    public String setNome(String nome){
+    public void  setNome(String nome){
         this.nome = nome;
     }
 }
