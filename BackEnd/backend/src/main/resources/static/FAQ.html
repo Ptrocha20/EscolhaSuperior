@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FAQs - EscolhaSuperior</title>
+  <link rel="icon" href="Imagens/Logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="Css/style_FAQ.css" />
+  <link rel="stylesheet" href="Css/style_header.css">
+</head>
+<body>
+
+    <!-- Cabeçalho -->
+    <header>
+        <div class="container header-content">
+            <div class="logo"> <a href="Index.html" class="logo_link">EscolhaSuperior</a></div>
+            <nav>
+                <ul>
+                    <li><a href="Universidade.html">Universidades</a></li>
+                    <li><a href="Cursos.html">Cursos</a></li>
+                    <li><a href="Sobre_Nos.html">Sobre</a></li>
+                </ul>
+            </nav>
+            <div class="auth">
+                <a href="Login.html">LOGIN</a>
+                <button class="btn" onclick="window.location.href='Registo.html'">SIGN UP</button>
+            </div>
+        </div>
+    </header>
+
+  <div class="page-wrapper">
+
+    <!-- Título -->
+    <section class="title-section">
+      <h2>Perguntas Frequentes</h2>
+      <div class="line"></div>
+    </section>
+
+    <!-- FAQs com Accordion -->
+    <section class="faqs">
+      <div class="container">
+        <div class="accordion">
+          <div class="accordion-item">
+            <button class="accordion-button">1. Como posso encontrar universidades no site?</button>
+            <div class="accordion-content">
+              <p>Podes utilizar a nossa página de Universidades para explorar por nome, localização ou área de estudo.</p>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <button class="accordion-button">2. Que tipos de cursos estão disponíveis?</button>
+            <div class="accordion-content">
+              <p>Incluímos licenciaturas, mestrados e cursos técnicos de diversas áreas do conhecimento.</p>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <button class="accordion-button">3. É necessário criar uma conta para aceder às informações?</button>
+            <div class="accordion-content">
+              <p>Não. Podes navegar e explorar à vontade. No entanto, para guardar favoritos ou comparar cursos, é necessário estar registado.</p>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <button class="accordion-button">4. Como posso entrar em contacto com uma universidade?</button>
+            <div class="accordion-content">
+              <p>Em cada página de universidade, incluímos informações de contacto, como e-mail, telefone e site oficial.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="custom-question">
+        <h3>Não encontraste a tua dúvida?</h3>
+        <p>Envia-nos a tua pergunta personalizada e entraremos em contacto contigo.</p>
+        <form action="#" method="post" class="question-form">
+          <input type="text" name="nome" placeholder="O teu nome" required />
+          <input type="email" name="email" placeholder="O teu email" required />
+          <textarea name="pergunta" rows="5" placeholder="Escreve aqui a tua pergunta..." required></textarea>
+          <button type="submit" class="btn1">Enviar Pergunta</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Rodapé -->
+    <footer>
+      <p>&copy; 2025 Escolha Superior. Todos os direitos reservados.</p>
+    </footer>
+
+  </div>
+
+  <!-- Script -->
+  <script>
+    const buttons = document.querySelectorAll('.accordion-button');
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        const content = button.nextElementSibling;
+        button.classList.toggle('active');
+        if (content.style.maxHeight) {
+          content.style.maxHeight = null;
+        } else {
+          document.querySelectorAll('.accordion-content').forEach(c => c.style.maxHeight = null);
+          content.style.maxHeight = content.scrollHeight + "px";
+        }
+      });
+    });
+  </script>
+</body>
+</html>

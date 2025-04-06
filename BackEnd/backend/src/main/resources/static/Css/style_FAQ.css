@@ -1,0 +1,157 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: white;
+    color: #36384E;
+}
+
+/* Wrapper para colar o footer ao fundo */
+.page-wrapper {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.faqs {
+    flex: 1;
+}
+
+.container {
+    width: 80%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Título */
+.title-section {
+    text-align: center;
+    padding: 60px 0 30px;
+}
+
+.line {
+    width: 133px;
+    height: 4px;
+    background: #E5B300;
+    margin: 10px auto;
+}
+
+/* Accordion */
+.accordion-item {
+    margin-bottom: 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+.accordion-button {
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    font-size: 18px;
+    font-weight: 500;
+    padding: 15px;
+    cursor: pointer;
+    outline: none;
+    color: #E5B300;
+    transition: background 0.3s ease;
+}
+
+.accordion-button:hover {
+    background-color: #f9f9f9;
+}
+
+.accordion-button.active {
+    font-weight: 600;
+}
+
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    padding: 0 15px;
+}
+
+.accordion-content p {
+    margin: 10px 0 15px;
+    font-size: 16px;
+    color: #36384E;
+}
+
+/* Formulário de Pergunta Personalizada */
+.custom-question {
+    margin-top: 50px;
+    background-color: #f9f9f9;
+    padding: 40px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.custom-question h3 {
+    font-size: 24px;
+    color: #36384E;
+    margin-bottom: 10px;
+}
+
+.custom-question p {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.question-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.question-form input,
+.question-form textarea {
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+    resize: none;
+}
+
+.question-form input:focus,
+.question-form textarea:focus {
+    outline: none;
+    border-color: #E5B300;
+}
+
+.btn1 {
+    background: #E5B300;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 14px 24px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: fit-content;
+    align-self: center;
+    transition: background 0.3s ease;
+}
+
+.btn1:hover {
+    background-color: #d4a700;
+}
+
+/* Rodapé */
+footer {
+    background: #36384E;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    nav ul {
+        gap: 15px;
+    }
+}
