@@ -1,4 +1,4 @@
-package com.escolhaSuperior.backend;
+package com.escolhaSuperior.backend.model;
 
 import jakarta.persistence.*;
 
