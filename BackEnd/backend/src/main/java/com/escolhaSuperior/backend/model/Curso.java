@@ -44,4 +44,44 @@ public class Curso {
     public void  setNome(String nome){
         this.nome = nome;
     }
+
+    public String getGrau(){
+        return grau;
+    }
+
+    public void setGrau(String grau){
+        this.grau=grau;
+    }
+
+    public Integer getDuracao(){
+        return duracao;
+    }
+
+    public void setDuracao(Integer duracao){
+        this.duracao = duracao;
+    }
+
+    public String getDescricao(){
+        return descricao;
+    }
+
+    public void setDescricao(String descricao){
+        this.descricao = descricao;
+    }
+
+    public String getPlano_Curricular(){
+        return plano_curricular;
+    }
+
+    public void setPlano_Curricular(String plano_curricular){
+        this.plano_curricular = plano_curricular;
+    }
+
+    public String getSaidas_Profissionais(){
+        return saidas_profissionais;
+    }
+
+    public void setSaidas_Profissionais(String saidas_profissionais){
+        this.saidas_profissionais = saidas_profissionais;
+    }
 }
