@@ -72,3 +72,38 @@ footer {
     text-align: center;
     padding: 20px;
 }
+
+/* Estilo geral para as tabelas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+/* Estilo para as células da tabela */
+th, td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+/* Cabeçalho da tabela */
+th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+/* Estilo para as linhas alternadas */
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Estilo para a linha ao passar o mouse */
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Espaçamento entre a tabela e outros conteúdos */
+section .container {
+    margin-top: 40px;
+}

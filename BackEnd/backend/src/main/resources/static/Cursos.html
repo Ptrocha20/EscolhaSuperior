@@ -37,54 +37,25 @@
     <!-- Filtros de Pesquisa -->
     <section class="filters">
         <div class="container">
-            <input type="text" placeholder="Denominação">
-            <select>
-                <option>Tipo de Curso</option>
+            <input type="text" id="filterDenominacao" placeholder="Denominação">
+            <select id="filterTipoCurso">
+                <option value="">Tipo de Curso</option>
             </select>
-            <select>
-                <option>Área de Estudo</option>
+            <select id="filterAreaEstudo">
+                <option value="">Área de Estudo</option>
             </select>
-            <select>
-                <option>Distrito</option>
+            <select id="filterDistrito">
+                <option value="">Distrito</option>
             </select>
-            <button class="btn">Procurar</button>
+            <button class="btn" onclick="filterCourses()">Procurar</button>
         </div>
     </section>
 
     <!-- Lista de Cursos -->
     <section class="courses">
         <div class="container">
-            <div class="cards">
-                <div class="card">
-                    <img src="https://placehold.co/433x278" alt="Stanford University">
-                    <h3>Engenharia Infromática</h3>
-                    <a href="Cursos_info.html">Ver Curso →</a>
-                </div>
-                <div class="card">
-                    <img src="https://placehold.co/433x278" alt="Stallion University">
-                    <h3>Medicina</h3>
-                    <a href="Cursos_info.html">Ver Curso →</a>
-                </div>
-                <div class="card">
-                    <img src="https://placehold.co/433x278" alt="Covenant University">
-                    <h3>Direito</h3>
-                    <a href="Cursos_info.html">Ver Curso →</a>
-                </div>
-                <div class="card">
-                    <img src="https://placehold.co/433x278" alt="Stanford University">
-                    <h3>Engenharia Civil</h3>
-                    <a href="Cursos_info.html">Ver Curso →</a>
-                </div>
-                <div class="card">
-                    <img src="https://placehold.co/433x278" alt="Stallion University">
-                    <h3>Arquitetura</h3>
-                    <a href="Cursos_info.html">Ver Curso →</a>
-                </div>
-                <div class="card">
-                    <img src="https://placehold.co/433x278" alt="Covenant University">
-                    <h3>Audovisual e Multimédia</h3>
-                    <a href="Cursos_info.html">Ver Curso →</a>
-                </div>
+            <div class="cards" id="courses-list">
+                <!-- Os cursos serão carregados aqui -->
             </div>
         </div>
     </section>
@@ -95,6 +66,64 @@
     <footer>
         <p>&copy; 2025 Escolha Superior. Todos os direitos reservados.</p>
     </footer>
+
+    <script>
+        // Função para carregar todos os cursos
+        function loadCourses() {
+            fetch('http://localhost:8080/api/curso') // Endereço do backend para obter os cursos
+                .then(response => response.json())
+                .then(cursos => {
+                    const coursesList = document.getElementById('courses-list');
+                    coursesList.innerHTML = ''; // Limpar lista antes de adicionar novos cursos
+                    cursos.forEach(curso => {
+                        const courseItem = document.createElement('div');
+                        courseItem.classList.add('card');
+                        courseItem.innerHTML = `
+                            <img src="https://placehold.co/433x278" alt="${curso.nome}">
+                            <h3>${curso.nome}</h3>
+                            <a href="Cursos_info.html?id=${curso.id}">Ver Curso →</a>
+                        `;
+                        coursesList.appendChild(courseItem);
+                    });
+                })
+                .catch(error => console.error('Erro ao carregar cursos:', error));
+        }
+
+        // Filtro de cursos
+        function filterCourses() {
+            const denominacao = document.getElementById('filterDenominacao').value;
+            const tipoCurso = document.getElementById('filterTipoCurso').value;
+            const areaEstudo = document.getElementById('filterAreaEstudo').value;
+            const distrito = document.getElementById('filterDistrito').value;
+
+            let url = 'http://localhost:8080/api/cursos?';
+            if (denominacao) url += `denominacao=${denominacao}&`;
+            if (tipoCurso) url += `tipoCurso=${tipoCurso}&`;
+            if (areaEstudo) url += `areaEstudo=${areaEstudo}&`;
+            if (distrito) url += `distrito=${distrito}&`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(cursos => {
+                    const coursesList = document.getElementById('courses-list');
+                    coursesList.innerHTML = ''; // Limpar lista antes de adicionar novos cursos
+                    cursos.forEach(curso => {
+                        const courseItem = document.createElement('div');
+                        courseItem.classList.add('card');
+                        courseItem.innerHTML = `
+                            <img src="https://placehold.co/433x278" alt="${curso.nome}">
+                            <h3>${curso.nome}</h3>
+                            <a href="Cursos_info.html?id=${curso.id}">Ver Curso →</a>
+                        `;
+                        coursesList.appendChild(courseItem);
+                    });
+                })
+                .catch(error => console.error('Erro ao carregar cursos:', error));
+        }
+
+        // Chamar a função para carregar os cursos ao carregar a página
+        window.onload = loadCourses;
+    </script>
 
 </body>
 </html>

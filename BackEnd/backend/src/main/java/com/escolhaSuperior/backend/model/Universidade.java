@@ -47,8 +47,8 @@ public class Universidade {
         return localizacao;
     }
 
-    public void setId(String localizacao) {
-        this.nome = localizacao;
+    public void setLocalizacao(String localizacao) {
+        this.localizacao = localizacao;
     }
 
     public String getDescricao() {

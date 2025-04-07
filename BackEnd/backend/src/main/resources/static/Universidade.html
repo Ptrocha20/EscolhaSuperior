@@ -27,75 +27,47 @@
         </div>
     </header>
 
-    <!-- Título -->
     <section class="title-section">
         <h2>Universidades</h2>
         <div class="line"></div>
     </section>
 
-    <!-- Filtros de Pesquisa -->
-    <section class="filters">
-        <div class="container">
-            <select>
-                <option>Instituição do Ensino Superior</option>
-            </select>
-            <select>
-                <option>Subsistema</option>
-            </select>
-            <select>
-                <option>Tipo de Ensino</option>
-            </select>
-            <select>
-                <option>Distrito</option>
-            </select>
-            <button class="btn">Procurar</button>
-        </div>
-    </section>
-
-    <!-- Lista de Universidades -->
+    <!-- Lista de Universidades (renderizada dinamicamente) -->
     <section class="universities">
         <div class="container">
-            <div class="cards">
-                <div class="card">
-                    <img src="https://placehold.co/433x278" alt="Stanford University">
-                    <h3>Lusofona Porto</h3>
-                    <a href="Universidades_info.html">Ver Universidade →</a>
-                </div>
-                <div class="card">
-                    <img src="https://placehold.co/433x278" alt="Stallion University">
-                    <h3>ISEP - Instituto Superior de Engenharia do Porto</h3>
-                    <a href="Universidades_info.html">Ver Universidade →</a>
-                </div>
-                <div class="card">
-                    <img src="https://placehold.co/433x278" alt="Covenant University">
-                    <h3>FEUP - Faculdade de Engenharia da Universidade do Porto</h3>
-                    <a href="Universidades_info.html">Ver Universidade →</a>
-                </div>
-                <div class="card">
-                    <img src="https://placehold.co/433x278" alt="Stanford University">
-                    <h3>FMUP - Faculdade de Medicina da Universidade do Porto</h3>
-                    <a href="Universidades_info.html">Ver Universidade →</a>
-                </div>
-                <div class="card">
-                    <img src="https://placehold.co/433x278" alt="Stallion University">
-                    <h3>Universidade Católica Portuguesa</h3>
-                    <a href="Universidades_info.html">Ver Universidade →</a>
-                </div>
-                <div class="card">
-                    <img src="https://placehold.co/433x278" alt="Covenant University">
-                    <h3>Universidade Lusíada Porto</h3>
-                    <a href="Universidades_info.html">Ver Universidade →</a>
-                </div>
+            <div class="cards" id="universidadeCards">
+                <!-- Universidades vão aparecer aqui -->
             </div>
         </div>
     </section>
 
     <br>
 
-    <!-- Rodapé -->
     <footer>
         <p>&copy; 2025 Escolha Superior. Todos os direitos reservados.</p>
     </footer>
+
+    <script>
+        fetch('http://localhost:8080/api/universidade')
+            .then(response => response.json())
+            .then(data => {
+                const container = document.getElementById('universidadeCards');
+                data.forEach(uni => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+
+                    card.innerHTML = `
+                        <img src="https://placehold.co/433x278" alt="${uni.nome}">
+                        <h3>${uni.nome}</h3>
+                        <a href="Universidades_info.html?id=${uni.id}">Ver Universidade →</a>
+                    `;
+                    container.appendChild(card);
+                });
+            })
+            .catch(error => {
+                console.error('Erro ao carregar universidades:', error);
+            });
+    </script>
 
 </body>
 </html>

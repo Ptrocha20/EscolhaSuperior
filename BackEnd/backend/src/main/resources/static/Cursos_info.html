@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Informações do Curso</title>
+    <title>Informações do Curso - EscolhaSuperior</title>
     <link rel="icon" href="Imagens/Logo.ico" type="image/x-icon">
     <link rel="stylesheet" href="Css/style_cursos-info.css">
     <link rel="stylesheet" href="Css/style_header.css">
 </head>
 <body>
 
+    <!-- Cabeçalho -->
     <header>
         <div class="container header-content">
             <div class="logo"> <a href="Index.html" class="logo_link">EscolhaSuperior</a></div>
@@ -27,39 +28,114 @@
         </div>
     </header>
 
-<section class="hero">
-    <div class="hero-overlay">
-        <div class="hero-content">
-            <h1>Nome do Curso</h1>
-            <p>Descobre tudo sobre este curso e suas oportunidades.</p>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-overlay">
+            <div class="hero-content">
+                <h1 id="courseName">Nome do Curso</h1>
+                <p>Descobre tudo sobre este curso e suas oportunidades.</p>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<section class="info">
-    <div class="container">
-        <h2>Sobre o Curso</h2>
-        <div class="line"></div>
-        <p>Descrição completa sobre o curso, áreas de atuação, tempo de duração e disciplinas principais.</p>
-    </div>
-</section>
+    <!-- Sobre o Curso -->
+    <section class="info">
+        <div class="container">
+            <h2>Sobre o Curso</h2>
+            <div class="line"></div>
+            <p id="courseDescription">Descrição completa sobre o curso, áreas de atuação, tempo de duração e disciplinas principais.</p>
+        </div>
+    </section>
 
-<section class="details">
-    <div class="container">
-        <h2>Detalhes</h2>
-        <div class="line"></div>
-        <ul>
-            <li>📚 Duração: X anos</li>
-            <li>🏫 Universidade: Nome da Universidade</li>
-            <li>🎓 Grau Acadêmico: Licenciatura/Mestrado</li>
-            <li>⭐ Avaliação: 4.5/5</li>
-        </ul>
-    </div>
-</section>
+    <!-- Detalhes do Curso -->
+    <section class="details">
+        <div class="container">
+            <h2>Detalhes</h2>
+            <div class="line"></div>
+            <ul>
+                <li>📚 Duração: <span id="courseDuration">X anos</span></li>
+                <li>🏫 Universidade: <span id="courseUniversity">Nome da Universidade</span></li>
+                <li>🎓 Grau Acadêmico: <span id="courseDegree">Licenciatura/Mestrado</span></li>
+                <li>⭐ Avaliação: <span id="courseRating">4.5/5</span></li>
+            </ul>
+        </div>
+    </section>
 
-<footer>
-    <p>&copy; 2025 Escolha Superior. Todos os direitos reservados.</p>
-</footer>
+    <!-- Plano Curricular -->
+    <section class="curriculum">
+        <div class="container">
+            <h2>Plano Curricular</h2>
+            <div class="line"></div>
+            <table id="courseCurriculumTable">
+                <thead>
+                    <tr>
+                        <th>Disciplina</th>
+                    </tr>
+                </thead>
+                <tbody id="courseCurriculum">
+                    <!-- As disciplinas serão inseridas aqui dinamicamente -->
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Saídas Profissionais -->
+    <section class="career">
+        <div class="container">
+            <h2>Saídas Profissionais</h2>
+            <div class="line"></div>
+            <table id="courseProfessionsTable">
+                <thead>
+                    <tr>
+                        <th>Profissão</th>
+                    </tr>
+                </thead>
+                <tbody id="courseProfessions">
+                    <!-- As saídas profissionais serão inseridas aqui dinamicamente -->
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Rodapé -->
+    <footer>
+        <p>&copy; 2025 Escolha Superior. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        window.onload = function() {
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id');
+            
+            if (id) {
+                fetch(`http://localhost:8080/api/curso/${id}`) 
+                    .then(response => response.json())
+                    .then(curso => {
+                        document.getElementById('courseName').textContent = curso.nome;
+                        document.getElementById('courseDescription').textContent = curso.descricao;
+                        document.getElementById('courseDuration').textContent = curso.duracao || 'Não especificado';
+                        document.getElementById('courseDegree').textContent = curso.grau || 'Não especificado';
+
+                        // Preenchendo o plano curricular na tabela
+                        let curriculumHTML = "";
+                        let disciplinas = curso.plano_Curricular.split(','); // Separando as disciplinas por vírgula
+                        disciplinas.forEach(disciplina => {
+                            curriculumHTML += `<tr><td>${disciplina.trim()}</td></tr>`;
+                        });
+                        document.getElementById('courseCurriculum').innerHTML = curriculumHTML;
+
+                        // Preenchendo as saídas profissionais na tabela
+                        let professionsHTML = "";
+                        let profissao = curso.saidas_Profissionais.split(','); // Separando as profissões por vírgula
+                        profissao.forEach(p => {
+                            professionsHTML += `<tr><td>${p.trim()}</td></tr>`;
+                        });
+                        document.getElementById('courseProfessions').innerHTML = professionsHTML;
+                    })
+                    .catch(error => console.error('Erro ao carregar detalhes do curso:', error));
+            }
+        };
+    </script>
 
 </body>
 </html>
