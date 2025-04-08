@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil - Escolha Superior</title>
+    <link rel="icon" href="Imagens/Logo.ico" type="image/x-icon">
+    <link rel="stylesheet" href="Css/styele_perfil.css">
+    <link rel="stylesheet" href="Css/style_header.css">
+</head>
+<body>
+
+    <!-- Cabeçalho -->
+    <header>
+        <div class="container header-content">
+            <div class="logo"> <a href="Index.html" class="logo_link">EscolhaSuperior</a></div>
+            <nav>
+                <ul>
+                    <li><a href="Universidade.html">Universidades</a></li>
+                    <li><a href="Cursos.html">Cursos</a></li>
+                    <li><a href="Sobre_Nos.html">Sobre</a></li>
+                </ul>
+            </nav>
+            <div class="auth">
+                <a href="Login.html">LOGIN</a>
+                <button class="btn" onclick="window.location.href='Registo.html'">SIGN UP</button>
+            </div>
+        </div>
+    </header>
+    <main>
+        <!-- Dados do Utilizador -->
+        <section class="perfil">
+            <div class="container">
+                <h1>Bem-vindo, <span id="userName">Tiago Silva</span> 👋</h1>
+                <p>Email: <span id="userEmail">tiago@email.com</span></p>
+            </div>
+        </section>
+
+        <!-- Universidades Guardadas -->
+        <section class="universities">
+            <div class="container">
+                <h2>Universidades Guardadas</h2>
+                <div class="line"></div>
+                <div class="cards" id="universidadesGuardadas">
+                    <!-- Cartões inseridos dinamicamente -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Cursos Guardados -->
+        <section class="courses">
+            <div class="container">
+                <h2>Cursos Guardados</h2>
+                <div class="line"></div>
+                <div class="cards" id="cursosGuardados">
+                    <!-- Cartões inseridos dinamicamente -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Rodapé -->
+    <footer>
+        <p>&copy; 2025 Escolha Superior. Todos os direitos reservados.</p>
+    </footer>
+
+</body>
+</html>

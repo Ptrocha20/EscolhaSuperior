@@ -65,10 +65,24 @@ section {
     line-height: 2;
 }
 
-/* Rodapé */
 footer {
     background: #36384E;
     color: white;
     text-align: center;
     padding: 20px;
+}
+
+.favorite-icon {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 36px;
+    color: #E5B300;
+    z-index: 2;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.favorite-icon.favorito {
+    color: #E5B300; 
 }
