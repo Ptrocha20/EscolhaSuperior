@@ -14,16 +14,41 @@
             <h2>Cria a tua conta</h2>
             <p>Junta-te à comunidade do EscolhaSuperior.</p>
 
-            <form action="/register" method="post">
-                <input type="text" placeholder="Nome Completo" required>
-                <input type="email" placeholder="Email" required>
-                <input type="password" placeholder="Palavra-passe" required>
+            <form id="registerForm">
+                <input type="text" name="nome" placeholder="Nome Completo" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="password" placeholder="Palavra-passe" required>
                 <button type="submit" class="btn">Registar</button>
             </form>
 
-            <p class="switch">Já tens conta? <a href="login.html">Faz login aqui</a></p>
+            <p class="switch">Já tens conta? <a href="Login.html">Faz login aqui</a></p>
         </div>
     </div>
+
+    <script>
+        document.getElementById("registerForm").addEventListener("submit", async function(e) {
+            e.preventDefault();
+
+            const nome = e.target.nome.value;
+            const email = e.target.email.value;
+            const password = e.target.password.value;
+
+            const response = await fetch("http://localhost:8080/api/auth/registo", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ nome, email, palavrapasse: password })
+            });
+
+            if (response.ok) {
+                alert("Conta criada com sucesso! Podes fazer login agora.");
+                window.location.href = "Login.html";
+            } else {
+                alert("Erro ao registar. Verifica os dados e tenta novamente.");
+            }
+        });
+    </script>
 
 </body>
 </html>

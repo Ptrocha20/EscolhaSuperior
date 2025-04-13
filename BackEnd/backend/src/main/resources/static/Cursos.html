@@ -70,11 +70,11 @@
     <script>
         // Função para carregar todos os cursos
         function loadCourses() {
-            fetch('http://localhost:8080/api/curso') // Endereço do backend para obter os cursos
+            fetch('http://localhost:8080/api/curso')
                 .then(response => response.json())
                 .then(cursos => {
                     const coursesList = document.getElementById('courses-list');
-                    coursesList.innerHTML = ''; // Limpar lista antes de adicionar novos cursos
+                    coursesList.innerHTML = '';
                     cursos.forEach(curso => {
                         const courseItem = document.createElement('div');
                         courseItem.classList.add('card');

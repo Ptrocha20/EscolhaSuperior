@@ -14,15 +14,41 @@
             <h2>Bem-vindo de volta!</h2>
             <p>Faz login para continuares a explorar o EscolhaSuperior.</p>
 
-            <form action="/login" method="post">
-                <input type="email" placeholder="Email" required>
-                <input type="password" placeholder="Palavra-passe" required>
+            <form id="loginForm">
+                <input type="text" name="email" placeholder="Email" required>
+                <input type="password" name="password" placeholder="Palavra-passe" required>
                 <button type="submit" class="btn">Entrar</button>
             </form>
 
-            <p class="switch">Ainda não tens conta? <a href="register.html">Regista-te aqui</a></p>
+            <p class="switch">Ainda não tens conta? <a href="Registo.html">Regista-te aqui</a></p>
         </div>
     </div>
+
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", async function(e) {
+            e.preventDefault();
+    
+            const email = e.target.email.value;
+            const password = e.target.password.value;
+    
+            const response = await fetch("http://localhost:8080/api/auth/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ email, palavrapasse: password })
+            });
+    
+            if (response.ok) {
+                const user = await response.json();
+                alert("Login bem-sucedido!");
+                localStorage.setItem("utilizadorId", user.id); // guarda o ID do utilizador
+                window.location.href = "Index.html";
+            } else {
+                alert("Credenciais inválidas. Tenta novamente.");
+            }
+        });
+    </script>
 
 </body>
 </html>
