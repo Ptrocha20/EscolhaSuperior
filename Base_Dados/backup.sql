@@ -404,4 +404,3 @@ ALTER TABLE ONLY public.responsavel_faculdade
 --
 -- PostgreSQL database dump complete
 --
-
