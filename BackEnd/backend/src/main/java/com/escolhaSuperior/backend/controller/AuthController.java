@@ -1,5 +1,6 @@
 package com.escolhaSuperior.backend.controller;
 
+import com.escolhaSuperior.backend.dto.UtilizadorDTO;
 import com.escolhaSuperior.backend.Service.AutenticacaoService;
 import com.escolhaSuperior.backend.model.Utilizador;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,9 @@ public class AuthController {
         Optional<Utilizador> utilizador = autenticacaoService.login(email, palavrapasse);
 
         if (utilizador.isPresent()) {
-            return ResponseEntity.ok(utilizador.get());
+            Utilizador u = utilizador.get();
+            UtilizadorDTO dto = new UtilizadorDTO(u.getIdUtilizador(), u.getNome(), u.getEmail());
+            return ResponseEntity.ok(dto);
         } else {
             return ResponseEntity.status(401).body("Credenciais inválidas");
         }

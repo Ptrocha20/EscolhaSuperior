@@ -42,8 +42,13 @@
             if (response.ok) {
                 const user = await response.json();
                 alert("Login bem-sucedido!");
-                localStorage.setItem("utilizadorId", user.id); // guarda o ID do utilizador
-                window.location.href = "Index.html";
+                localStorage.setItem("utilizadorId", user.idUtilizador);
+                console.log("Login recebido do backend:", user);
+                setTimeout(() => {
+                    window.location.href = "Perfil.html";
+                }, 100); // 100ms de delay
+
+        
             } else {
                 alert("Credenciais inválidas. Tenta novamente.");
             }

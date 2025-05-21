@@ -21,16 +21,14 @@
                     <li><a href="Sobre_Nos.html">Sobre</a></li>
                 </ul>
             </nav>
-            <div class="auth">
-                <a href="Login.html">LOGIN</a>
-                <button class="btn" onclick="window.location.href='Registo.html'">SIGN UP</button>
+            <div class="auth" id="authArea">
             </div>
         </div>
     </header>
 
     <!-- Hero Section -->
     <section class="hero">
-        <span class="favorite-icon" onclick="toggleFavorito(this)">★</span>
+        <span id="favoriteIcon" class="favorite-icon" onclick="toggleFavorito()">☆</span>
         <div class="hero-overlay">
             <div class="hero-content">
                 <h1 id="courseName">Nome do Curso</h1>
@@ -104,11 +102,62 @@
     </footer>
 
     <script>
-        window.onload = function() {
+        window.onload = () => {
+            const authArea = document.getElementById("authArea");
+            const userId = localStorage.getItem("utilizadorId");
+
+            if (authArea) {
+                if (userId) {
+                    authArea.innerHTML = `
+                        <button class="btn" onclick="window.location.href='Perfil.html'">PERFIL</button>
+                    `;
+                } else {
+                    authArea.innerHTML = `
+                        <a href="Login.html">LOGIN</a>
+                        <button class="btn" onclick="window.location.href='Registo.html'">SIGN UP</button>
+                    `;
+                }
+            } else {
+                console.error("Elemento #authArea não encontrado no DOM.");
+            }
+        };
+    </script>
+
+
+    <script>
+        let cursoFavorito = false;
+
+        function toggleFavorito() {
+            const idCurso = new URLSearchParams(window.location.search).get("id");
+            const idUtilizador = localStorage.getItem("utilizadorId");
+
+            if (!idUtilizador || !idCurso) {
+                alert("É necessário estar autenticado.");
+                return;
+            }
+
+            const url = `http://localhost:8080/api/utilizador/${cursoFavorito ? 'desfavoritar' : 'favoritar'}-curso/${idCurso}?idUtilizador=${idUtilizador}`;
+            const method = cursoFavorito ? "DELETE" : "PUT";
+
+            fetch(url, { method })
+                .then(response => {
+                    if (response.ok) {
+                        cursoFavorito = !cursoFavorito;
+                        document.getElementById("favoriteIcon").textContent = cursoFavorito ? "★" : "☆";
+                    } else {
+                        alert("Erro ao atualizar favorito.");
+                    }
+                })
+                .catch(error => console.error("Erro ao atualizar favorito:", error));
+        }
+
+        window.onload = function () {
             const params = new URLSearchParams(window.location.search);
             const id = params.get('id');
-            
+            const idUtilizador = localStorage.getItem("utilizadorId");
+
             if (id) {
+                // Carregar detalhes do curso
                 fetch(`http://localhost:8080/api/curso/${id}`) 
                     .then(response => response.json())
                     .then(curso => {
@@ -117,26 +166,35 @@
                         document.getElementById('courseDuration').textContent = curso.duracao || 'Não especificado';
                         document.getElementById('courseDegree').textContent = curso.grau || 'Não especificado';
 
-                        // Preenchendo o plano curricular na tabela
                         let curriculumHTML = "";
-                        let disciplinas = curso.plano_Curricular.split(','); // Separando as disciplinas por vírgula
+                        let disciplinas = curso.plano_Curricular?.split(',') || [];
                         disciplinas.forEach(disciplina => {
                             curriculumHTML += `<tr><td>${disciplina.trim()}</td></tr>`;
                         });
                         document.getElementById('courseCurriculum').innerHTML = curriculumHTML;
 
-                        // Preenchendo as saídas profissionais na tabela
                         let professionsHTML = "";
-                        let profissao = curso.saidas_Profissionais.split(','); // Separando as profissões por vírgula
+                        let profissao = curso.saidas_Profissionais?.split(',') || [];
                         profissao.forEach(p => {
                             professionsHTML += `<tr><td>${p.trim()}</td></tr>`;
                         });
                         document.getElementById('courseProfessions').innerHTML = professionsHTML;
                     })
                     .catch(error => console.error('Erro ao carregar detalhes do curso:', error));
+
+                // Verifica se o curso já é favorito
+                if (idUtilizador) {
+                    fetch(`http://localhost:8080/api/utilizadores/${idUtilizador}`)
+                        .then(response => response.json())
+                        .then(utilizador => {
+                            cursoFavorito = utilizador.cursosFavoritos.some(curso => curso.idcurso == id);
+                            document.getElementById("favoriteIcon").textContent = cursoFavorito ? "★" : "☆";
+                        })
+                        .catch(error => console.error("Erro ao verificar favoritos:", error));
+                }
             }
         };
-    </script>
+</script>
 
 </body>
 </html>

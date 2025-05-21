@@ -21,9 +21,7 @@
                     <li><a href="Sobre_Nos.html">Sobre</a></li>
                 </ul>
             </nav>
-            <div class="auth">
-                <a href="Login.html">LOGIN</a>
-                <button class="btn" onclick="window.location.href='Registo.html'">SIGN UP</button>
+            <div class="auth" id="authArea">
             </div>
         </div>
     </header>
@@ -88,6 +86,29 @@
     </footer>
 
   </div>
+
+  <script>
+        window.onload = () => {
+            const authArea = document.getElementById("authArea");
+            const userId = localStorage.getItem("utilizadorId");
+
+            if (authArea) {
+                if (userId) {
+                    authArea.innerHTML = `
+                        <button class="btn" onclick="window.location.href='Perfil.html'">PERFIL</button>
+                    `;
+                } else {
+                    authArea.innerHTML = `
+                        <a href="Login.html">LOGIN</a>
+                        <button class="btn" onclick="window.location.href='Registo.html'">SIGN UP</button>
+                    `;
+                }
+            } else {
+                console.error("Elemento #authArea não encontrado no DOM.");
+            }
+        };
+    </script>
+
 
   <!-- Script -->
   <script>

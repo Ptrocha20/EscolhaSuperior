@@ -20,15 +20,13 @@
                 <li><a href="Sobre_Nos.html">Sobre</a></li>
             </ul>
         </nav>
-        <div class="auth">
-            <a href="Login.html">LOGIN</a>
-            <button class="btn" onclick="window.location.href='Registo.html'">SIGN UP</button>
+       <div class="auth" id="authArea">
         </div>
     </div>
 </header>
 
 <section class="hero">
-    <span class="favorite-icon" onclick="toggleFavorito(this)">★</span>
+    <span id="favoriteIcon" class="favorite-icon" onclick="toggleFavorito()">☆</span>
     <div class="hero-overlay">
         <div class="hero-content">
             <h1 id="uniNome">Nome da Universidade</h1>
@@ -62,31 +60,80 @@
 </footer>
 
 <script>
+    window.onload = () => {
+        const authArea = document.getElementById("authArea");
+        const userId = localStorage.getItem("utilizadorId");
+
+        if (authArea) {
+            if (userId) {
+                authArea.innerHTML = `
+                    <button class="btn" onclick="window.location.href='Perfil.html'">PERFIL</button>
+                `;
+            } else {
+                authArea.innerHTML = `
+                    <a href="Login.html">LOGIN</a>
+                    <button class="btn" onclick="window.location.href='Registo.html'">SIGN UP</button>
+                `;
+            }
+        } else {
+            console.error("Elemento #authArea não encontrado no DOM.");
+        }
+    };
+
+</script>
+
+
+<script>
     const params = new URLSearchParams(window.location.search);
     const id = params.get('id');
+    const utilizadorId = localStorage.getItem("utilizadorId");
 
     if (id) {
         fetch(`http://localhost:8080/api/universidade/${id}`)
-        .then(response => response.json())
-        .then(uni => {
-            console.log("Dados retornados da API:", uni);  // Exibe os dados no console
-            if (uni) {
-                document.getElementById('uniNome').textContent = uni.nome || 'Nome não disponível';
-                document.getElementById('uniDescricao').textContent = uni.descricao || 'Descrição não disponível';
-                document.getElementById('uniLocalizacao').textContent = "📍 Localização: " + (uni.localizacao || 'Localização não disponível');
-                document.getElementById('uniTipo').textContent = "🏛️ Tipo: " + (uni.tipo || 'Tipo não disponível');
-                document.getElementById('uniSite').innerHTML = `🔗 Site: <a href="${uni.site}" target="_blank">${uni.site}</a>`;
-            } else {
-                console.error("Universidade não encontrada");
-            }
-        })
-        .catch(error => {
-            console.error("Erro ao carregar universidade:", error);
-        });
+            .then(response => response.json())
+            .then(uni => {
+                if (uni) {
+                    document.getElementById('uniNome').textContent = uni.nome || 'Nome não disponível';
+                    document.getElementById('uniDescricao').textContent = uni.descricao || 'Descrição não disponível';
+                    document.getElementById('uniLocalizacao').textContent = "📍 Localização: " + (uni.localizacao || 'Localização não disponível');
+                    document.getElementById('uniTipo').textContent = "🏛️ Tipo: " + (uni.tipo || 'Tipo não disponível');
+                    document.getElementById('uniSite').innerHTML = `🔗 Site: <a href="${uni.site}" target="_blank">${uni.site}</a>`;
+                } else {
+                    console.error("Universidade não encontrada");
+                }
+            })
+            .catch(error => {
+                console.error("Erro ao carregar universidade:", error);
+            });
     } else {
         console.warn("ID de universidade não especificado na URL");
     }
+
+    function toggleFavorito(element) {
+        if (!utilizadorId) {
+            alert("É necessário fazer login para guardar favoritos.");
+            return;
+        }
+
+        fetch(`http://localhost:8080/api/utilizador/favoritar-universidade/${id}?idUtilizador=${utilizadorId}`, {
+            method: 'PUT'
+        })
+        .then(response => {
+            if (response.ok) {
+                alert("Universidade adicionada aos favoritos!");
+                element.classList.add("favorited");
+            } else {
+                alert("Erro ao guardar universidade como favorita.");
+            }
+        })
+        .catch(error => {
+            console.error("Erro ao enviar favorito:", error);
+        });
+
+        
+    }
 </script>
+
 
 </body>
 </html>
